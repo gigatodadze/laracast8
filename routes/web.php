@@ -16,20 +16,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    $files = File::files(resource_path("posts"));
-
-   $posts = array_map(function ($file){
-        $doc = \Spatie\YamlFrontMatter\YamlFrontMatter::parseFile($file);
-
-        return new Post($doc->title,$doc->excerpt,$doc->date,$doc->body(),$doc->slug);
-    }
-    ,$files);
-
-
-
     return view('posts',
     [
-        'posts'=> $posts
+        'posts'=> Post::all()
     ]);
 });
 

@@ -23,7 +23,7 @@ class Post
      * @param $date
      * @param $body
      */
-    public function __construct($title, $excerpt, $date, $body,$slug)
+    public function __construct($title, $excerpt, $date, $body, $slug)
     {
         $this->title = $title;
         $this->excerpt = $excerpt;
@@ -32,20 +32,16 @@ class Post
         $this->slug = $slug;
     }
 
-    public static function all(){
-
-
-        return array_map(fn($file) => $file->getContents(),$files);
-
+    public static function all()
+    {
+        return collect(File::files(resource_path("posts")))
+            ->map(fn($file) => \Spatie\YamlFrontMatter\YamlFrontMatter::parseFile($file))
+            ->map(fn($doc) => new Post($doc->title, $doc->excerpt, $doc->date, $doc->body(), $doc->slug));
     }
 
     public static function find($slug)
     {
-         if (!file_exists($path = resource_path("posts/{$slug}.html"))) {
-             throw new ModelNotFoundException();
-         }
-        return cache()->remember("posts.{$slug}",now()->addMinutes(3), fn() => file_get_contents($path));
+
+        return static::all()->firstWhere('slug',$slug);
     }
-
-
 }
