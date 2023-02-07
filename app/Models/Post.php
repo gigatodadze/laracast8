@@ -34,9 +34,18 @@ class Post
 
     public static function all()
     {
-        return collect(File::files(resource_path("posts")))
-            ->map(fn($file) => \Spatie\YamlFrontMatter\YamlFrontMatter::parseFile($file))
-            ->map(fn($doc) => new Post($doc->title, $doc->excerpt, $doc->date, $doc->body(), $doc->slug));
+        return cache()->rememberForever('posts.all',function (){
+            return collect(File::files(resource_path("posts")))
+                ->map(fn($file) => \Spatie\YamlFrontMatter\YamlFrontMatter::parseFile($file))
+                ->map(fn($doc) => new Post(
+                    $doc->title,
+                    $doc->excerpt,
+                    $doc->date,
+                    $doc->body(),
+                    $doc->slug))
+                ->sortByDesc('date');
+        });
+
     }
 
     public static function find($slug)
