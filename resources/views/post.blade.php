@@ -9,8 +9,8 @@
         <title>FlickHouse</title>
     </head>
     <body>
-     <h1> <?= $post->title ?> </h1>
-        <div> <?= $post->body; ?> </div>
+        <h1> {{$post->title}} </h1>
+        <div> {!! $post->body !!} </div>
         <a href="/">Go back</a>
     </body>
 </html>
