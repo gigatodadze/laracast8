@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             [
                 'user_id'=>$user->id
             ]);
-   
+
 
         //$work = Category::create([
         //    'name' => 'Work',
