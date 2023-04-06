@@ -32,7 +32,7 @@
 
                 @endforeach
             </x-dropdown>
-            <x-down-arrow class="absolute pointer-events-none" style="right: 12px;" />
+            <x-icon name="down-arrow" class="absolute pointer-events-none" style="right: 12px;" />
         </div>
 
         <!-- Other Filters -->
@@ -45,7 +45,7 @@
                 <option value="bar">Bar
                 </option>
             </select>
-            <x-down-arrow class="absolute pointer-events-none" style="right: 12px;" />
+            <x-icon name="down-arrow" class="absolute pointer-events-none" style="right: 12px;" />
         </div>
 
         <!-- Search -->
