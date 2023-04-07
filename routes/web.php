@@ -16,15 +16,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    //\Illuminate\Support\Facades\DB::listen(function ($query){
-    //  logger($query->sql,$query->bindings);
-    //});
+    $posts = Post::latest();
+    if (request('search')) {
+        $posts
+            ->where('title', 'like', '%' . request('search') . '%')
+            ->orWhere('body', 'like', '%' . request('search') . '%');
+    }
 
     return view('posts',
         [
             //'posts' => Post::latest()->with('category','author')->get(),
-            'posts' => Post::latest()->get(),
-            'categories'=>\App\Models\Category::all()
+            'posts' => $posts->get(),
+            'categories' => \App\Models\Category::all(),
         ]);
 })->name('home');
 
@@ -38,8 +41,8 @@ Route::get('categories/{category:slug}', function (\App\Models\Category $categor
     return view('posts',
         [
             'posts' => $category->posts,
-             'currentCategory'=>$category,
-             'categories'=>\App\Models\Category::all()
+            'currentCategory' => $category,
+            'categories' => \App\Models\Category::all()
             //'posts' => $category->posts->load('category','author'),
         ]);
 })->name('category');
@@ -48,7 +51,7 @@ Route::get('authors/{author:username}', function (\App\Models\User $author) {
     return view('posts',
         [
             'posts' => $author->posts,
-            'categories'=>\App\Models\Category::all()
+            'categories' => \App\Models\Category::all()
             //'posts' => $author->posts->load('category','author')
         ]);
 });
