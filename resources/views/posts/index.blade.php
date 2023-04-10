@@ -1,6 +1,6 @@
 <x-layout>
 
-    @include('_post-header')
+    @include('posts._header')
 
     {{--    @foreach ($posts as $post)--}}
     {{--        <article class="{{$loop->even ? 'FlickGod' : ''}}">--}}

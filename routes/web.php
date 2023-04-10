@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PostController::class, 'index'])->name('home');
 
-Route::get('posts/{post:slug}',[PostController::class,'show']);
+Route::get('posts/{post:slug}', [PostController::class, 'show']);
 
 //Route::get('categories/{category:slug}', function (\App\Models\Category $category) {
 //    return view('posts',
@@ -34,7 +34,5 @@ Route::get('authors/{author:username}', function (\App\Models\User $author) {
     return view('posts',
         [
             'posts' => $author->posts,
-            'categories' => \App\Models\Category::all()
-            //'posts' => $author->posts->load('category','author')
         ]);
 });
